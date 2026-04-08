@@ -1,0 +1,125 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <random>
+#include <algorithm>
+
+using namespace std;
+
+// Conjuntos de caracteres
+const string LOWER = "abcdefghijklmnopqrstuvwxyz";
+const string UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const string DIGITS = "0123456789";
+const string SYMBOLS = "!@#$%^&*()-_=+[]{}<>?/";
+
+// Generador random 
+random_device rd;
+mt19937 gen(rd());
+
+// Carácter random de un string
+char getRandomChar(const string& str) {
+    uniform_int_distribution<> dist(0, str.size() - 1);
+    return str[dist(gen)];
+}
+
+// Evaluar seguridad 
+string evaluateSecurity(const string& pass) {
+    int score = 0;
+
+    if (pass.length() >= 8) score++;
+    if (pass.length() >= 12) score++;
+    if (pass.find_first_of(LOWER) != string::npos) score++;
+    if (pass.find_first_of(UPPER) != string::npos) score++;
+    if (pass.find_first_of(DIGITS) != string::npos) score++;
+    if (pass.find_first_of(SYMBOLS) != string::npos) score++;
+
+    if (score <= 2) return "Weak";
+    else if (score <= 4) return "Medium";
+    else return "Strong";
+}
+
+// Generador de contraseña
+string generatePassword(int longitud, bool useLower, bool useUpper, bool useDigits, bool useSymbols) {
+    vector<string> pools;
+    string allChars = "";
+
+    if (useLower) {
+        pools.push_back(LOWER);
+        allChars += LOWER;
+    }
+    if (useUpper) {
+        pools.push_back(UPPER);
+        allChars += UPPER;
+    }
+    if (useDigits) {
+        pools.push_back(DIGITS);
+        allChars += DIGITS;
+    }
+    if (useSymbols) {
+        pools.push_back(SYMBOLS);
+        allChars += SYMBOLS;
+    }
+
+    if (allChars.empty()) {
+        return "Error: You didn't select any character.";
+    }
+
+    string password;
+
+    // Garantiza al menos un carácter de cada tipo seleccionado
+    for (const string& pool : pools) {
+        password += getRandomChar(pool);
+    }
+
+    uniform_int_distribution<> dist(0, allChars.size() - 1);
+    while (password.length() < longitud) {
+        password += allChars[dist(gen)];
+    }
+
+    // Mezcla la contraseña
+    shuffle(password.begin(), password.end(), gen);
+
+    return password;
+}
+
+int main() {
+    int length, quantity;
+    char option;
+
+    bool useLower = true, useUpper = true, useDigits = true, useSymbols = true;
+
+    cout << " ====== WELCOME TO ======\n";
+    cout << "=== PASSWORD GENERATOR ===\n\n";
+
+    cout << "Password length: ";
+    cin >> length;
+
+    cout << "How may passwords?: ";
+    cin >> quantity;
+
+    cout << "\nInclude lower case letters? (s/n): ";
+    cin >> option;
+    useLower = (option == 's' || option == 'S');
+
+    cout << "Include capital letters? (s/n): ";
+    cin >> option;
+    useUpper = (option == 's' || option == 'S');
+
+    cout << "Include numbers? (s/n): ";
+    cin >> option;
+    useDigits = (option == 's' || option == 'S');
+
+    cout << "Include symbols? (s/n): ";
+    cin >> option;
+    useSymbols = (option == 's' || option == 'S');
+
+    cout << "\n=== RESULTS ===\n\n";
+
+    for (int i = 0; i < quantity; i++) {
+        string pass = generatePassword(length, useLower, useUpper, useDigits, useSymbols);
+        cout << i + 1 << ". " << pass
+            << "  --> Security: " << evaluateSecurity(pass) << endl;
+    }
+
+    return 0;
+}

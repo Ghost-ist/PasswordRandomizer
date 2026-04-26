@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <random>
+#include <algorithm>
+
+using namespace std;
+
+// Conjuntos de caracteres
+const string LOWER = "abcdefghijklmnopqrstuvwxyz";
+const string UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const string DIGITS = "0123456789";
+const string SYMBOLS = "!@#$%^&*()-_=+[]{}<>?/";
+
+// Generador random 
+random_device rd;
+mt19937 gen(rd());
+
+// Carácter random de un string
+char getRandomChar(const string& str) {
+    uniform_int_distribution<> dist(0, str.size() - 1);
+    return str[dist(gen)];
+}
+@

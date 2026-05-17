@@ -84,12 +84,26 @@ string generatePassword(int longitud, bool useLower, bool useUpper, bool useDigi
 
 int main() {
     int length, quantity;
-    char option;
+    char option, term;
 
     bool useLower = true, useUpper = true, useDigits = true, useSymbols = true;
 
     cout << " ====== WELCOME TO ======\n";
     cout << "=== PASSWORD GENERATOR ===\n\n";
+    cout << "Disclaimer:" << endl;
+    cout << "Before accessing, please read the following information carefully. By accessing this site, you acknowledge that you have read and accepted the terms and conditions." << endl;
+    cout << "You may not copy our password generator code and make money from it." << endl;
+    cout << "Do not destroy the code or do anything else that damages the code of the page/password generator." << endl;
+    cout << "You may use our code for inspiration, but you need our permission. You must credit us in the comments on the code or page." << endl;
+    cout << "If you need to ask a question about the code, you need to email us, but we are not guaranteed a response." << endl;
+    cout << "We are not responsible if your password is compromised; you are responsible for creating a strong password in the program. ";
+    cout << "We are not responsible if an external party uses our program without permission and causes harm.\n" << endl;
+    cout << "Do you accept this terms (y/n): ";
+    cin >> term;
+    
+    if (term == 'n' || term == 'N') {
+        return 0;
+    }
 
     cout << "Password length: ";
     cin >> length;

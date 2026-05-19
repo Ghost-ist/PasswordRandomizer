@@ -86,7 +86,7 @@ int main() {
     int length, quantity;
     char option, term;
 
-    bool useLower = true, useUpper = true, useDigits = true, useSymbols = true;
+    bool useLower = true, uselower = false, useUpper = true, useupper = false, useDigits = true, usedigits = false, useSymbols = true, usesymbols = false;
 
     cout << " ====== WELCOME TO ======\n";
     cout << "=== PASSWORD GENERATOR ===\n\n";
@@ -98,7 +98,7 @@ int main() {
     cout << "If you need to ask a question about the code, you need to email us, but we are not guaranteed a response." << endl;
     cout << "We are not responsible if your password is compromised; you are responsible for creating a strong password in the program. ";
     cout << "We are not responsible if an external party uses our program without permission and causes harm.\n" << endl;
-    cout << "Do you accept this terms (y/n): ";
+    cout << "Do you accept these terms? (y/n): ";
     cin >> term;
     
     if (term == 'n' || term == 'N') {
@@ -110,15 +110,26 @@ int main() {
     if (length >= 50) {
         cout << "Invalid input...";
         return 0;
+    } else if (length <= 4) {
+        cout << "Invalid input...";
+        return 0;
     }
 
-    cout << "How may passwords?: ";
+    cout << "How many passwords?: ";
     cin >> quantity;
+    if (quantity >= 50) {
+        cout << "Invalid input...";
+    } else if (quantity <= 1) {
+        cout << "Invalid input...";
+        return 0;
+    }
 
     cout << "\nInclude lower case letters? (y/n): ";
     cin >> option;
     if (useLower = (option == 'y' || option == 'Y')) {
-    } else {
+    } else if (uselower = (option == 'n' || option == 'N')) {
+     
+    } else { 
         cout << "Invalid input...";
         return 0;
     }
@@ -126,7 +137,9 @@ int main() {
     cout << "Include capital letters? (y/n): ";
     cin >> option;
     if (useUpper = (option == 'y' || option == 'Y')) {
-    } else {
+    } else if (useupper = (option == 'n' || option == 'N')) {
+     
+    } else { 
         cout << "Invalid input...";
         return 0;
     }
@@ -134,15 +147,19 @@ int main() {
     cout << "Include numbers? (y/n): ";
     cin >> option;
     if (useDigits = (option == 'y' || option == 'Y')) {
-    } else {
+    } else if (usedigits = (option == 'n' || option == 'N')) {
+     
+    } else { 
         cout << "Invalid input...";
         return 0;
     }
-
+    
     cout << "Include symbols? (y/n): ";
     cin >> option;
     if (useSymbols = (option == 'y' || option == 'Y')) {
-    } else {
+    } else if (usesymbols = (option == 'n' || option == 'N')) {
+     
+    } else { 
         cout << "Invalid input...";
         return 0;
     }
